@@ -1,26 +1,11 @@
 import PropTypes from 'prop-types';
+import ArticleItem from './ArticleItem';
 
-function ArticleList({ articles, onClickToggle, onClickRemove }) {
+function ArticleList({ articles, onClickRemove }) {
     return (
         <ul>
-            {articles.map((i) => (
-                <li key={i.id}>
-                    <a
-                        href={`#${i.id}`}
-                        title="Toggle Summary"
-                        onClick={() => onClickToggle(i.id)}
-                    >
-                        {i.title}
-                    </a>
-                    &nbsp;
-                    <button
-                        title="Remove"
-                        onClick={() => onClickRemove(i.id)}
-                    >
-                        &#10007;
-                    </button>
-                    <p style={{ display: i.display }}>{i.summary}</p>
-                </li>
+            {articles.map((article) => (
+                <ArticleItem key={article.id.value} article={article} onClickRemove={onClickRemove} />
             ))}
         </ul>
     );
@@ -35,7 +20,6 @@ ArticleList.propTypes = {
             display: PropTypes.string.isRequired
         })
     ).isRequired,
-    onClickToggle: PropTypes.func.isRequired,
     onClickRemove: PropTypes.func.isRequired
 };
 

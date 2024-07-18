@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 import ArticleList from "./ArticleList";
+import AddArticle from "./AddArticle";
 
 const id = (function* () {
     let i = 1;
@@ -54,35 +55,24 @@ function MyFeature(){
 
     },[summary,title]);
 
-    const onClickRemove = useCallback((id) =>{
-        setArticles((state) =>{
-            state.filter((article) => article.id !== id);
-        })
-    },[])
 
-    const onClickToggle = useCallback((id) => {
-        setArticles((state) => {
-          const articles = [...state];
-          const index = articles.findIndex((article) => article.id === id);
-          articles[index] = {
-            ...articles[index],
-            display: articles[index].display ? "" : "none",
-          };
-          return articles;
-        });
-      }, []);
 
+    const onClickRemove = React.useCallback((id) => {
+      setArticles((state) => state.filter((article) => article.id !== id));
+    }, []);
 
 
     return (
         <section>
-              <header>
-                <h1>Articles</h1>
-                <input type="text" placeholder="Title" value={title} onChange={onChangeTitle} />
-                <input type="text" placeholder="Summary" value={summary} onChange={onChangeSummary} />
-                <button onClick={onClickAdd}>Add</button>
-                </header>
-            <ArticleList articles={articles} onClickRemove={onClickRemove} onClickToggle={onClickToggle} /> 
+            <AddArticle
+            name="Articles"
+            title={title}
+            summary={summary}
+            onChangeTitle={onChangeTitle}
+            onChangeSummary={onChangeSummary}
+            onClickAdd={onClickAdd}
+            />
+            <ArticleList articles={articles} onClickRemove={onClickRemove} /> 
         </section>
   
 )
